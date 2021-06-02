@@ -26,7 +26,8 @@ gcc -s -O3 -o iprange iprange.c
 ```
 
 Download GeoIPCountryCSV.zip from the maxmind
-
+wget https://files-cdn.liferay.com/mirrors/geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip
+unzip GeoIPCountryCSV.zip
 Check the csv file
 
 ``` shell
@@ -52,3 +53,9 @@ $ cut -d, -f1,2,5 GeoIPCountryWhois.csv | ./iprange | sed 's/"//g' | awk -F' ' '
 
 @[Willy](http://1wt.eu/) for the iprange tool
 
+#for backend
+
+backend a.b.c.d
+acl indo-sub src -f /root/haproxy-geoip-iprange/ipranges/AU.subnets
+http-request deny if !indo-sub
+    server srv1 172.27.0.2:80
